@@ -15,6 +15,6 @@ const changeNameUrl = '${url}users/changename';
 const getItemsByCategory = '${url}getitems/';
 const updateItemUrl = '${url}updateitem';
 const deleteItemUrl = '${url}deleteitem';
-const uploadImageUrl = '${url}upload-image';
+const uploadImageUrl = '${url}users/upload';
 const fetchAllExpenses = '${url}fetchallexpenses';
 const fetchAllIncomes = '${url}fetchallincomes';

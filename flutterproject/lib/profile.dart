@@ -11,7 +11,7 @@ class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
@@ -346,10 +346,10 @@ class _ProfilePageState extends State<ProfilePage> {
                       Navigator.pushNamed(context, '/profileimage');
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
+                      backgroundColor: const Color.fromARGB(255, 3, 158, 9),
                       foregroundColor: Colors.white,
                     ),
-                    child: const Text('Upload Photo'),
+                    child: const Text('Update Photo'),
                   ),
                   const SizedBox(height: 40),
                   Padding(

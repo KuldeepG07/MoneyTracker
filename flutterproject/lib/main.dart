@@ -3,6 +3,7 @@ import 'package:flutterproject/analytics.dart';
 import 'package:flutterproject/app_state.dart';
 import 'package:flutterproject/categories.dart';
 import 'package:flutterproject/profile.dart';
+import 'package:flutterproject/profileimage.dart';
 import 'package:provider/provider.dart';
 import 'signup.dart';
 import 'login.dart';
@@ -19,7 +20,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -38,18 +39,30 @@ class MyApp extends StatelessWidget {
             Consumer<AppState>(builder: (context, appState, child) {
               return appState.isLoggedIn ? const HomePage() : const LoginPage();
             }),
-        '/profile':  (context) => 
+        '/profile': (context) =>
             Consumer<AppState>(builder: (context, appState, child) {
-              return appState.isLoggedIn ? const ProfilePage() : const LoginPage();
+              return appState.isLoggedIn
+                  ? const ProfilePage()
+                  : const LoginPage();
             }),
-        '/categories':  (context) => 
+        '/categories': (context) =>
             Consumer<AppState>(builder: (context, appState, child) {
-              return appState.isLoggedIn ? const CategoriesPage() : const LoginPage();
+              return appState.isLoggedIn
+                  ? const CategoriesPage()
+                  : const LoginPage();
             }),
-        '/analytics': (context) => 
+        '/analytics': (context) =>
             Consumer<AppState>(builder: (context, appState, child) {
-              return appState.isLoggedIn ? const AnalyticsPage() : const LoginPage();
+              return appState.isLoggedIn
+                  ? const AnalyticsPage()
+                  : const LoginPage();
             }),
+        '/profileimage': (context) =>
+            Consumer<AppState>(builder: (context, appState, child) {
+              return appState.isLoggedIn
+                  ? const ProfileImagePage()
+                  : const LoginPage();
+            })
       },
     );
   }
@@ -71,7 +84,7 @@ class MainPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/logo.png', 
+              'assets/images/logo.png',
               width: 300,
             ),
             const SizedBox(height: 20),
