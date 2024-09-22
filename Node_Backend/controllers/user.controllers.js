@@ -1,5 +1,4 @@
 const UserServices = require('../services/user.services');
-const userServices = require('../services/user.services');
 
 exports.getUserByEmail = async (req, res, next) => {
     try {
@@ -7,7 +6,7 @@ exports.getUserByEmail = async (req, res, next) => {
         if (!email) {
             return res.status(400).json({ status: false, message: 'Email is required.' });
         }
-        const userExists = await userServices.isUserExists(email);
+        const userExists = await UserServices.isUserExists(email);
         if ( !userExists) {
             return res.status(400).json({ status: false, message: 'No user found with the given email.' });
         }
@@ -20,11 +19,11 @@ exports.getUserByEmail = async (req, res, next) => {
 exports.signup = async (req, res, next) => {
     try {
         const { name, email, password } = req.body;
-        const userExists = await userServices.isUserExists(email);
+        const userExists = await UserServices.isUserExists(email);
         if (userExists) {
             return res.status(400).json({ status: false, message: 'User exists with the given email.' });
         }
-        const signupResult = await userServices.signup(name, email, password);
+        const signupResult = await UserServices.signup(name, email, password);
         return res.status(200).json({ status: true, message: 'Account created successfully.' });
     } catch (e) {
         throw e;
@@ -34,7 +33,7 @@ exports.signup = async (req, res, next) => {
 exports.login = async (req,res,next) => {
     try {
         const { email, password } = req.body;
-        const user = await userServices.login(email, password);
+        const user = await UserServices.login(email, password);
         if( !user ) {
             return res.status(400).json({status: false, message: 'Invalid credentials.'});
         }
@@ -90,5 +89,23 @@ exports.changeName = async (req,res,next) => {
         return res.status(200).json({ status: true, message: "Name changed successfully", user: ChangedNameUser});
     } catch(error) {
         return res.status(500).json({ status: false, message:"Error while changing name!"});
+    }
+};
+
+exports.uploadProfile = async (req,res,next) => {
+    try {
+        const email = req.query.email;
+        const profileImage = req.file ? req.file : null;
+        console.log(profileImage);
+        if (!email || !profileImage) {
+            return res.status(400).json({ status: false, message: 'Email and profile image are required.' });
+        }
+        const updatedUser = await UserServices.updateProfileImage(email, profileImage.path);
+        if (!updatedUser) {
+            return res.status(400).json({ status: false, message: 'User not found.' });
+        }
+        return res.status(200).json({ status: true, message: 'Profile image updated successfully.', user: updatedUser });
+    } catch (error) {
+        return res.status(500).json({ status: false, message: 'Error while uploading profile image.' });
     }
 };

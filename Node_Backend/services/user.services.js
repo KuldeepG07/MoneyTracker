@@ -1,5 +1,4 @@
 const UserModel = require('../models/user.model');
-const jwt = require('jsonwebtoken');
 
 class UserServices {
 
@@ -47,6 +46,21 @@ class UserServices {
         try {
             return await UserModel.changeName(email, newName);
         } catch(error) {
+            throw error;
+        }
+    }
+
+    static async updateProfileImage(email, profileImage) {
+        try {
+            const user = await UserModel.findOne({ email });
+            if (user) {
+                user.profileImage = profileImage;
+                await user.save();
+                return user;
+            } else {
+                return null;
+            }
+        } catch (error) {
             throw error;
         }
     }
